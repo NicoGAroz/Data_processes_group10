@@ -6,7 +6,7 @@ Adjust PATH to your file. Column names are the ones you provided.
 import pandas as pd
 import numpy as np
 
-PATH = "patient_information.csv"
+PATH = "./patient_information.csv"
 
 KEY_SURGERY = "LOG_ID"
 KEY_PATIENT = "MRN"

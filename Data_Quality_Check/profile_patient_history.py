@@ -8,8 +8,8 @@ import os
 import pandas as pd
 import numpy as np
 
-HISTORY_PATH = "patient_history.csv"
-SURGERY_PATH = "patient_information.csv"     # optional cross-table checks
+HISTORY_PATH = "./patient_history.csv"
+SURGERY_PATH = "./patient_information.csv"     # optional cross-table checks
 
 KEY_PATIENT = "mrn"
 CODE = "diagnosis_code"

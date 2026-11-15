@@ -8,8 +8,8 @@ Standalone: loads both files itself.
 import pandas as pd
 import numpy as np
 
-HISTORY_PATH = "patient_history.csv"
-SURGERY_PATH = "patient_information.csv"
+HISTORY_PATH = "./patient_history.csv"
+SURGERY_PATH = "./patient_information.csv"
 
 
 def section(title):
