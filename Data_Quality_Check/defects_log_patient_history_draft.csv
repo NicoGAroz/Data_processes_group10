@@ -1,0 +1,11 @@
+table,column,description,rows_affected,pct_rows,how_found,impact_on_icu_prediction,mitigation
+patient_history,diagnosis_code,Missing values,245444,25.284,isna(),,
+patient_history,dx_name,Leading/trailing whitespace,1,0.0,compare with strip(),,
+patient_history,dx_name,Values differ only by case/spacing,6,0.001,normalisation compare,,
+patient_history,all,Fully duplicated rows,533020,54.909,df.duplicated(),,
+patient_history,"['mrn', 'diagnosis_code']",Same patient+code repeated beyond exact duplicates (different name or spacing?),97503,10.044,"duplicated(subset=[mrn, diagnosis_code])",,
+patient_history,diagnosis_code,Codes matching neither ICD-9 nor ICD-10 pattern,636,0.066,regex check,,
+patient_history,diagnosis_code,Mixed ICD-9 and ICD-10 coding systems,645354,66.481,regex check,,
+patient_history,diagnosis_code/dx_name,Same code with different names,4193,0.432,groupby nunique,,
+patient_history,dx_name,Diagnoses that may describe post-surgical events (possible leakage),11396,1.174,keyword search in dx_name,,
+patient_history,mrn,History patients not present in surgery table,36413,3.751,set difference of MRNs,,
