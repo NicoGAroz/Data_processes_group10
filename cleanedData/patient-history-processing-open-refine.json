@@ -1,0 +1,129 @@
+[
+  {
+    "op": "core/row-duplicate-removal",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "criteria": [
+      "mrn",
+      "diagnosis_code",
+      "dx_name"
+    ],
+    "description": "Remove duplicate rows"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "mrn",
+    "expression": "grel:if(isBlank(cells['diagnosis_code'].value), \"blank-\" + row.index, cells['mrn'].value + \"|\" + cells['diagnosis_code'].value)",
+    "onError": "set-to-blank",
+    "newColumnName": "repeated_code_ICD",
+    "columnInsertIndex": 1,
+    "description": "Create column repeated_code_ICD at index 1 based on column mrn using expression grel:if(isBlank(cells['diagnosis_code'].value), \"blank-\" + row.index, cells['mrn'].value + \"|\" + cells['diagnosis_code'].value)"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "mrn",
+    "expression": "grel:row.index",
+    "onError": "set-to-blank",
+    "newColumnName": "original_order",
+    "columnInsertIndex": 1,
+    "description": "Create column original_order at index 1 based on column mrn using expression grel:row.index"
+  },
+  {
+    "op": "core/row-reorder",
+    "mode": "row-based",
+    "sorting": {
+      "criteria": [
+        {
+          "valueType": "string",
+          "column": "mrn",
+          "blankPosition": 2,
+          "errorPosition": 1,
+          "reverse": false,
+          "caseSensitive": false
+        },
+        {
+          "valueType": "string",
+          "column": "repeated_code_ICD",
+          "blankPosition": 2,
+          "errorPosition": 1,
+          "reverse": false,
+          "caseSensitive": false
+        }
+      ]
+    },
+    "description": "Reorder rows"
+  },
+  {
+    "op": "core/blank-down",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "columnName": "repeated_code_ICD",
+    "description": "Blank down cells in column repeated_code_ICD"
+  },
+  {
+    "op": "core/row-removal",
+    "engineConfig": {
+      "facets": [
+        {
+          "type": "list",
+          "name": "repeated_code_ICD",
+          "expression": "isBlank(value)",
+          "columnName": "repeated_code_ICD",
+          "invert": false,
+          "omitBlank": false,
+          "omitError": false,
+          "selection": [
+            {
+              "v": {
+                "v": true,
+                "l": "true"
+              }
+            }
+          ],
+          "selectBlank": false,
+          "selectError": false
+        }
+      ],
+      "mode": "row-based"
+    },
+    "description": "Remove rows"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "repeated_code_ICD",
+    "description": "Remove column repeated_code_ICD"
+  },
+  {
+    "op": "core/row-reorder",
+    "mode": "row-based",
+    "sorting": {
+      "criteria": [
+        {
+          "valueType": "number",
+          "column": "original_order",
+          "blankPosition": 2,
+          "errorPosition": 1,
+          "reverse": false
+        }
+      ]
+    },
+    "description": "Reorder rows"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "original_order",
+    "description": "Remove column original_order"
+  }
+]
