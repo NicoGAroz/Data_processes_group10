@@ -42,9 +42,9 @@ CAST_FUNC = {
 def connect() -> psycopg.Connection:
     return psycopg.connect(host="localhost",
     port=5432,
-    dbname="Data_Processes_Project",
-    user="postgres",
-    password="FgnM2026!")  # libpq reads PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD, PGSSLMODE
+    dbname="PLACEHOLDEr",
+    user="PLACEHOLDER",
+    password="PLACEHOLDER")  # libpq reads PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD, PGSSLMODE
 
 # helper function to run the sql files
 def run_sql_file(conn: psycopg.Connection, name: str) -> None:
