@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:16
+    container_name: mover_db
+    environment:
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+    ports:
+      - "127.0.0.1:${PGPORT}:5432"      # reachable from this machine only
+    volumes:
+      - mover_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER} -d ${PGDATABASE}"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  mover_pgdata:
